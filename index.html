@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>feature-model-viz</title>
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="bundle.js"></script>
+    
+    <script>
+      $(function() {
+          $("button").click(function() {
+              try {
+                  var xml = $.parseXML($("textarea").val().trim());
+                  window.app = new ModelViz(new Model(new XmlModel(xml)), $(".model-viz"));
+              } catch (e) {
+                  alert(e);
+              }
+          });
+      });
+    </script>
+
+    <style>
+      svg {
+          user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <textarea cols="100" rows="10"></textarea>
+    </div>
+    <button>Load Model</button>
+    <div class="model-viz"></div>
+    <pre></pre>
+  </body>
+</html>
