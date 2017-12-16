@@ -11,8 +11,14 @@
       $(function() {
           $("button").click(function() {
               try {
-                  var xml = $.parseXML($("textarea").val().trim());
-                  window.app = new ModelViz(new Model(new XmlModel(xml)), $(".model-viz"));
+                  var modelXml = $.parseXML($("#model").val().trim()),
+                      configurationXml = $.parseXML($("#configuration").val().trim()),
+                      model = new Model(new XmlModel(modelXml)),
+                      configuration = Configuration.fromXml(model, configurationXml);
+                  window.app = new ModelViz(model, {
+                      target: $(".model-viz"),
+                      size: "100%"
+                  }, configuration);
               } catch (e) {
                   alert(e);
               }
@@ -28,7 +34,8 @@
   </head>
   <body>
     <div>
-      <textarea cols="100" rows="10"></textarea>
+      <textarea cols="100" rows="10" id="model" placeholder="Model"></textarea>
+      <textarea cols="100" rows="10" id="configuration" placeholder="Configuration (optional)"></textarea>
     </div>
     <button>Load Model</button>
     <div class="model-viz"></div>
