@@ -1,6 +1,6 @@
 {
     "name": "feature-model-viz",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Browser-based visualization for FeatureIDE feature models",
     "license": "SEE LICENSE IN README.md",
     "repository": {

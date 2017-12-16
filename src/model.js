@@ -45,4 +45,5 @@ function Model(xmlModel) {
 
     this.xmlModel = xmlModel;
     this.features = buildFeatureList(xmlModel);
+    this.getFeature = featureGetter("features");
 }

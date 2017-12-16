@@ -1,19 +1,28 @@
-function ModelViz(model, elem, size) {
+function ModelViz(model, options, configuration) {
     if (!(this instanceof ModelViz))
-        return new ModelViz(model, elem);
+        return new ModelViz(model, options, configuration);
 
-    elem = elem || $("body");
+    options.target = options.target || $("body");
     this.model = model;
-    this.renderTo(elem, size);
+    this.options = options;
+    this.render(configuration);
 }
 
-ModelViz.prototype.toDot = function() {
+ModelViz.prototype.toDot = function(configuration) {
     function quote(str) {
         return "\"" + str.replace(/"/g, '\\"') + '"';
     }
 
+    function nodeColor(feature) {
+        if (configuration.enabledFeatures.find(featureFinder(feature.name)))
+            return feature.abstract ? "#e6ffe7" : "#b3e6b4"; // base #ccffcd
+        if (configuration.disabledFeatures.find(featureFinder(feature.name)))
+            return feature.abstract ? "#ffe6e6" : "#e6b3b3"; // base #ffcccc
+        return feature.abstract ? "#f2f2ff" : "#ccccff";
+    }
+
     function node(feature) {
-        return quote(feature.name) + ' [fillcolor="' + (feature.abstract ? "#f2f2ff" : "#ccccff") + '"' +
+        return quote(feature.name) + ' [fillcolor="' + nodeColor(feature) + '"' +
             (feature.description ? ' tooltip=' + quote(feature.description) : '') +
             ' shape=' + (feature.alternative || feature.or ? "invhouse" : "box") +
             '];\n';
@@ -43,11 +52,13 @@ ModelViz.prototype.toDot = function() {
     return dot;
 };
 
-ModelViz.prototype.renderTo = function(elem, size) {
-    var svgString = Viz(this.toDot());
+ModelViz.prototype.render = function(configuration) {
+    configuration = configuration || new Configuration(this.model);
+    
+    var svgString = Viz(this.toDot(configuration));
     var svgElem = new DOMParser().parseFromString(svgString, "image/svg+xml").documentElement;
-    if (size)
-        svgElem.style.width = svgElem.style.height = size;
+    if (this.options.size)
+        svgElem.style.width = svgElem.style.height = this.options.size;
     $(svgElem).find(".edge > title, .graph > title").remove();
-    elem.empty().append(svgElem);
+    this.options.target.empty().append(svgElem);
 };

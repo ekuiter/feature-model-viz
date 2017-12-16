@@ -18,3 +18,15 @@ function Feature(node, parent) {
     this.or = node.prop("tagName") === "or";
     this.parent = parent ? new Feature(parent) : null;
 }
+
+function featureGetter(key) {
+    return function(name) {
+        return this[key].find(featureFinder(name));
+    };
+}
+
+function featureFinder(name) {
+    return function(feature) {
+        return feature.name === name;
+    };
+}
