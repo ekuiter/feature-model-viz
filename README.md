@@ -87,5 +87,4 @@ loads a given feature model and then renders a visualization for it. You can
 
 ### License
 
-The rules from
-[uvr2web](https://github.com/ekuiter/uvr2web/blob/master/LICENSE.txt) apply.
+This project is released under the [LGPL v3 license](LICENSE.txt).
