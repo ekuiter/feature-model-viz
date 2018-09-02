@@ -1,13 +1,19 @@
 ## feature-model-viz
 
+![feature-model-viz example](./example.jpg)
+
 This tool takes a [FeatureIDE](https://featureide.github.io) feature model
 ([like this](https://raw.githubusercontent.com/FeatureIDE/FeatureIDE/develop/featuremodels/FeatureIDE/model.xml))
 and visualizes it as a graph (similar to FeatureIDE's feature model editor).
 Configurations (i.e. feature selections) can be visualized as well.
 
 [Click here](https://ekuiter.github.io/feature-model-viz) for an online
-demonstration. You should be able to load any consistent FeatureIDE feature
-model.
+demonstration. You should be able to load any FeatureIDE feature model.
+
+**Limitations**: feature-model-viz supports only visualization of feature
+models. The validity of any feature constraints is not checked. This applies to
+configurations as well. Also, as of now, additional cross-tree constraints are
+not shown.
 
 ### Intention
 
